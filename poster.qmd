@@ -1,9 +1,9 @@
 ---
-title: This is a Fabulously Reproducible Academic Poster with Typst and quarto!
+title: Patient perceptions regarding HCC screening risk stratification
 format:
   poster-typst: 
     size: "72x30"
-    poster-authors: "J. Sheehan^1^, L.A. Johnson^1^, A. Jordan^1^, P.D.R. Higgins^1^"
+    poster-authors: "T. Hunold^1^, N. Parikh^1^"
     departments: "^1^Division of Gastroenterology, Department of Internal Medicine, University of Michigan"
     institution-logo: "./images/umichlogohex.png"
     univ_image: "./images/UMhospital.jpeg"
