@@ -16,9 +16,9 @@ format:
     univ-image-scale: 130
     font-size: 48
     footer-text: "Digestive Disease Week 2025"
-    footer-emails: "jsheeha@med.umich.edu"
+    footer-emails: "thunold@med.umich.edu"
     footer-color: "FFCB05"
-    footer-url: "Download this poster at:  https://github.com/higgi13425/quarto_poster/blob/master/poster.pdf"
+    footer-url: "Download this poster at:  https://github.com/th8ma/quarto_poster_template/blob/aasldHCC_Perceptions/poster.pdf"
 ---
 
 # Background
