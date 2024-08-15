@@ -31,6 +31,8 @@ We show a bulleted list above. Note that the superscripts in the author list wer
 
 # Methods
 
+Participants were recruited at clinic visits for cirrhosis related care. They were approached by research coordinators who assessed their willingness to participate in the research study. If willing, the patient completed the REDCap survey on a study iPad.
+
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim aeque doleamus animo, cum corpore dolemus, fieri. Now it is time for an enumerated list. You just put "1." before each entry and the markdown processor will take care of the rest.
 
 1.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
