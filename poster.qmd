@@ -4,7 +4,7 @@ format:
   poster-typst: 
     size: "72x30"
     poster-authors: "T. Hunold^1^, N. Parikh^1^"
-    departments: "^1^Division of Gastroenterology, Department of Internal Medicine, University of Michigan"
+    departments: "^1^Division of Gastroenterology and Hepatology, Department of Internal Medicine, University of Michigan"
     institution-logo: "./images/umichlogohex.png"
     univ_image: "./images/UMhospital.jpeg"
     univ-logo-column-size: 6
@@ -23,33 +23,32 @@ format:
 
 # Background
 
-- Background Text with bullets
-- More information
-- Even more information
-- Even more information than you wanted
+-   Recent studies have show that precision screening in HCC is cost effective
+-   Patient opinions around HCC screening are largely unknown
+-   We know that patients have not been amenable to decreasing screening
 
-We show a bulleted list above. Note that the superscripts in the author list were invoked with the markdown commands by putting carets (up-arrows, shift-6) around the numbers. There are more markdown shortcuts found here (https://quarto.org/docs/visual-editor/options.html) for all kinds of formatting, like **bold**, _italic_, ~subscripts~, or even ~~strikethrough~~.
+We show a bulleted list above. Note that the superscripts in the author list were invoked with the markdown commands by putting carets (up-arrows, shift-6) around the numbers. There are more markdown shortcuts found here (https://quarto.org/docs/visual-editor/options.html) for all kinds of formatting, like **bold**, *italic*, ~subscripts~, or even ~~strikethrough~~.
 
 # Methods
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim aeque doleamus animo, cum corpore dolemus, fieri. Now it is time for an enumerated list. You just put "1. " before each entry and the markdown processor will take care of the rest.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim aeque doleamus animo, cum corpore dolemus, fieri. Now it is time for an enumerated list. You just put "1." before each entry and the markdown processor will take care of the rest.
 
-1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
+1.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
+2.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
+3.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
 
 Now we will lay out a manual markdown table with a title. The title is placed after the table. The title is a markdown header, so it will be formatted as such. We are using math notation to get the Greek letters. You can get more details on making markdown tables here (https://quarto.org/docs/authoring/tables.html). This is fine for simple, small tables with few cells. For larger, more complicated tables, you will want to use the {gt} package.
 
-| Column 1               | Col2         | Column 3     |
-|------------------------|--------------|--------------|
-| Lorem ipsum dolor.     | Lorem ipsum. | $\alpha$     |
-| Lorem ipsum.           | Lorem ipsum. | $\beta$      |
-| Lorem.                 | Lorem.       | $\gamma$     |
-| Lorem ipsum dolor.     | Lorem.       | $\theta$     |
+| Column 1           | Col2         | Column 3 |
+|--------------------|--------------|----------|
+| Lorem ipsum dolor. | Lorem ipsum. | $\alpha$ |
+| Lorem ipsum.       | Lorem ipsum. | $\beta$  |
+| Lorem.             | Lorem.       | $\gamma$ |
+| Lorem ipsum dolor. | Lorem.       | $\theta$ |
 
 : This is a Table Title {#tbl-1}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim aeque doleamus animo, cum corpore dolemus, fieri tamen permagna accessio potest, si aliquod aeternum et infinitum impendere malum nobis opinemur. Quod idem licet transferre in voluptatem, ut postea variari voluptas distinguique possit, augeri amplificarique non possit. 
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim aeque doleamus animo, cum corpore dolemus, fieri tamen permagna accessio potest, si aliquod aeternum et infinitum impendere malum nobis opinemur. Quod idem licet transferre in voluptatem, ut postea variari voluptas distinguique possit, augeri amplificarique non possit.
 
 # Results
 
@@ -64,11 +63,11 @@ knitr::include_graphics('./images/Standard_lettering.png')
 ```
 
 \
-We can use backslashes to create line breaks in the markdown text. This is a very useful feature for making the text more readable.
-\
+We can use backslashes to create line breaks in the markdown text. This is a very useful feature for making the text more readable.\
 \
 
-## Now a fancy table made with the {gt} package 
+## Now a fancy table made with the {gt} package
+
 \
 
 ```{r}
@@ -155,34 +154,29 @@ penguin_table |>
 
 # Discussion
 
-We will start with a random **math** equation, just to show that quarto and typst can do _math_. Now some random text so that the yellow box spans two columns. Ut enim aeque doleamus animo, cum corpore dolemus, fieri tamen permagna accessio potest, si aliquod aeternum et infinitum impendere malum nobis opinemur.We will put this next part in a **maize-colored box** to make it stand out.
+We will start with a random **math** equation, just to show that quarto and typst can do *math*. Now some random text so that the yellow box spans two columns. Ut enim aeque doleamus animo, cum corpore dolemus, fieri tamen permagna accessio potest, si aliquod aeternum et infinitum impendere malum nobis opinemur.We will put this next part in a **maize-colored box** to make it stand out.
 
-::: {.block fill=rgb("FFCB05") inset="10pt" radius="4pt" stroke="2pt + black" } 
-
-
+::: {.block fill="rgb(\"FFCB05\")" inset="10pt" radius="4pt" stroke="2pt + black"}
 $$
 \sum_(k=1)^n k = \frac{(n(n+1))}{2} = \frac{(n^2 + n)}{2}
 $$
 
-- That was a math equation bracketed by $ (which invokes the math translator), notice that the box extends across column breaks. Watch the indent when this extends across a whole line. Note that this box does not have a lot of inset padding, unlike the gray box below, where the text can 'breathe'. 
-- Also notice how rounded the corners are (radius) in the two different boxes.
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-
+-   That was a math equation bracketed by \$ (which invokes the math translator), notice that the box extends across column breaks. Watch the indent when this extends across a whole line. Note that this box does not have a lot of inset padding, unlike the gray box below, where the text can 'breathe'.
+-   Also notice how rounded the corners are (radius) in the two different boxes.
+-   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
 :::
+
 \
 
-## Implications in a Gray Box (0[black]-255[white]) with a Blue Border
+## Implications in a Gray Box (0\[black\]-255\[white\]) with a Blue Border
 
 \
 
 ::: {.block fill="luma(210)" inset="25pt" radius="15pt" stroke="5pt + blue"}
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim aeque doleamus animo, cum corpore dolemus, fieri tamen permagna accessio potest, si aliquod aeternum et infinitum impendere malum nobis opinemur. 
-
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim aeque doleamus animo, cum corpore dolemus, fieri tamen permagna accessio potest, si aliquod aeternum et infinitum impendere malum nobis opinemur.
 :::
 
-Now inserting another plot and controlling the height and width in inches on this 72 in poster. Note the backslash (for a line break) is used on a line by itself to give us a bit of separation between the text and the plot.
-\
+Now inserting another plot and controlling the height and width in inches on this 72 in poster. Note the backslash (for a line break) is used on a line by itself to give us a bit of separation between the text and the plot.\
 
 ```{r}
 #| echo: FALSE
