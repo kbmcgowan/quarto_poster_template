@@ -23,27 +23,27 @@
   $if(size)$ size: "$size$", $endif$
 
   // Institution logo.
-  $if(institution-logo)$ univ_logo: "$institution-logo$", $endif$
+  $if(univ-logo)$ univ-logo: "$univ-logo$", $endif$
 
   // Institution image.
-  $if(institution-image)$ univ_image: "$institution-image$", $endif$
+  $if(univ-image)$ univ-image: "$univ-image$", $endif$
   
   // Footer text.
   // For instance, Name of Conference, Date, Location.
   // or Course Name, Date, Instructor.
-  $if(footer-text)$ footer_text: [$footer-text$], $endif$
+  $if(footer-text)$ footer-text: [$footer-text$], $endif$
 
   // Any URL, like a link to the conference website.
-  $if(footer-url)$ footer_url: [$footer-url$], $endif$
+  $if(footer-url)$ footer-url: [$footer-url$], $endif$
 
   // Emails of the authors.
-  $if(footer-emails)$ footer_email_ids: [$footer-emails$], $endif$
+  $if(footer-emails)$ footer-email-ids: [$footer-emails$], $endif$
 
   // Color of the header.
   $if(header-color)$ header-color: "$header-color$", $endif$
   
   // Color of the footer.
-  $if(footer-color)$ footer_color: "$footer-color$", $endif$
+  $if(footer-color)$ footer-color: "$footer-color$", $endif$
 
   // DEFAULTS
   // ========
@@ -77,10 +77,12 @@
   $if(title-column-size)$ title_column_size: $title-column-size$, $endif$
 
   // Poster title's font size (in pt).
-  $if(title-font-size)$ title_font_size: $title-font-size$, $endif$
+  $if(title_font_size)$ title_font_size: $title_font_size$, $endif$
+  $if(title_font_color)$ title_font_color: $title_font_color$, $endif$
 
   // Authors' font size (in pt).
-  $if(authors-font-size)$ authors_font_size: $authors-font-size$, $endif$
+  $if(authors_font_size)$ authors_font_size: $authors_font_size$, $endif$
+  $if(authors-font-color)$ authors_font_color: $authors-font-color$, $endif$
 
   // Footer's URL and email font size (in pt).
   $if(footer-url-font-size)$ footer_url_font_size: $footer-url-font-size$, $endif$

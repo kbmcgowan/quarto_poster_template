@@ -2,3 +2,5 @@
 .Rhistory
 .RData
 .Ruserdata
+.DS_Store
+_extensions/quarto-ext/poster/.typst-show.typ.swp

@@ -1,25 +1,26 @@
 ---
-title: This is a Fabulously Reproducible Academic Poster with Typst and quarto!
+title: Listeners do not need an F1/F2 target to perceive vowel quality _or_ regional accentedness
 format:
   poster-typst: 
-    size: "33x47"
-    poster-authors: "J. Sheehan^1^, L.A. Johnson^1^, A. Jordan^1^, P.D.R. Higgins^1^"
-    departments: "^1^Division of Gastroenterology, Department of Internal Medicine, University of Michigan"
-    institution-logo: "./images/umichlogohex.png"
-    univ_image: "./images/UMhospital.jpeg"
-    univ-logo-column-size: 3
-    univ-logo-scale: 100
-    title-column-size: 25
-    title-font-size: 72
-    authors-font-size: 36
-    univ-image-column-size: 4
-    univ-image-scale: 100
-    footer-text: "Digestive Disease Week 2025"
-    footer-emails: "jsheeha@med.umich.edu"
-    footer-color: "FFCB05"
-    footer-url: "Download this poster at:  https://github.com/higgi13425/quarto_poster/blob/master/poster.pdf"
-    footer-url-font-size: 24
+    size: "48x36"
+    poster-authors: "Kevin B. McGowan, Stella Takvoryan"
+    departments: "Department of Linguistics, University of Kentucky"
+    header-color: "265CA4"
+    univ-logo: "./images/Department-of-Linguistics-white.png"
+    univ-image: "./images/speech-is-social.png"
     
+    title_font_size: 90
+    authors_font_size: 42
+    footer_url_font_size: 18
+    footer_text_font_size: 18
+    footer_text_font_color: "FFFFFF"
+    font-size: 42
+    
+    footer-text: "Midphon 30"
+    footer-emails: "kbmcgowan@uky.edu, stakvoryan@uky.edu"
+    footer-color: "265CA4"
+    footer-text-color: "FFFFFF"
+    footer-url: "Download this poster from: https://phonetics.as.uky.edu/research/asc/midphon30/"
 ---
 
 # Background
@@ -29,21 +30,17 @@ format:
 - Even more information
 - Even more information than you wanted
 
-We show a bulleted list above. Note that the superscripts in the author list were invoked with the markdown commands by putting carets (up-arrows, shift-6) around the numbers. There are more markdown shortcuts found here (https://quarto.org/docs/visual-editor/options.html) for all kinds of formatting, like **bold**, _italic_, ~subscripts~, or even ~~strikethrough~~.
+{{< lipsum 1 >}}
 
 # Methods
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim aeque doleamus animo, cum corpore dolemus, fieri. Now it is time for an enumerated list. You just put "1. " before each entry and the markdown processor will take care of the rest.
+{{< lipsum 1 random=true >}}
 
 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
 1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-
-\
 
 Now we will lay out a manual markdown table with a title. The title is placed after the table. The title is a markdown header, so it will be formatted as such. We are using math notation to get the Greek letters. You can get more details on making markdown tables here (https://quarto.org/docs/authoring/tables.html). This is fine for simple, small tables with few cells. For larger, more complicated tables, you will want to use the {gt} package.
-
-\
 
 | Column 1               | Col2         | Column 3     |
 |------------------------|--------------|--------------|
@@ -54,7 +51,7 @@ Now we will lay out a manual markdown table with a title. The title is placed af
 
 : This is a Table Title {#tbl-1}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim aeque doleamus animo, cum corpore dolemus, fieri tamen permagna accessio potest, si aliquod aeternum et infinitum impendere malum nobis opinemur. Quod idem licet transferre in voluptatem, ut postea variari voluptas distinguique possit, augeri amplificarique non possit. 
+{{< lipsum 1 random=true >}}
 
 # Results
 
@@ -62,7 +59,7 @@ We will place a figure or image below using markdown syntax. We can specify the 
 
 ```{r}
 #| echo: FALSE
-#| out.width: 95%
+#| out.width: 100%
 #| fig.cap: "The details of a specific serif font."
 #| fig.align: "center"
 knitr::include_graphics('./images/Standard_lettering.png')
@@ -175,21 +172,18 @@ $$
 
 :::
 \
-\
-\
-\
-\
-\
 
-## Implications in a Gray Box \ 
-## (0[black]-255[white]) with \
-## a Blue Border
+## Implications in a Gray Box (0[black]-255[white]) with a Blue Border
 
 \
 
 ::: {.block fill="luma(210)" inset="25pt" radius="15pt" stroke="5pt + blue"}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim aeque doleamus animo, cum corpore dolemus, fieri tamen permagna accessio potest, si aliquod aeternum et infinitum impendere malum nobis opinemur. 
+1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
+1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
+1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
+1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
+1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
 
 :::
 
@@ -210,30 +204,13 @@ palmerpenguins::penguins |>
 ```
 
 
-\
+# References
+```{r, echo=FALSE}
+#| message: false
+#| warning: false
+library(qrcode)
+refs <- qr_code("https://phonetics.as.uky.edu/research/asc/midphon30/#references")
+plot(refs)
 
-# Next Steps
+```
 
-::: {.block fill=rgb("#D2F1FE") inset="10pt" radius="4pt" stroke="2pt + black" } 
-1. We will do amazing research in vitro with cell lines in petri dishes
-1. We will extend this with in vivo studies in mice and rats.
-1. We will then extend this with pig studies
-1. We will then move to human clinical trials.
-1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-:::
-
-\
-
-# To Infinity and Beyond
-
-::: {.block fill=rgb("#99EDC3") inset="10pt" radius="4pt" stroke="2pt + black" } 
-1. We will do amazing research in vitro with cell lines in petri dishes
-1. We will extend this with in vivo studies in mice and rats.
-1. We will then extend this with pig studies
-1. We will then move to human clinical trials.
-1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-:::

@@ -13,24 +13,25 @@
   departments: "Department Name",
 
   // University logo.
-  univ_logo: "Logo Path",
+  univ-logo: "Logo Path",
   
   // University image.
-  univ_image: "./images/UMhospital.jpeg",
+  univ-image: "Image Path",
 
   // Footer text.
   // For instance, Name of Conference, Date, Location.
   // or Course Name, Date, Instructor.
-  footer_text: "Footer Text",
+  footer-text: "Footer Text",
 
   // Any URL, like a link to the conference website.
-  footer_url: "Footer URL",
+  footer-url: "Footer URL",
 
   // Email IDs of the authors.
-  footer_email_ids: "Email IDs (separated by commas)",
+  footer-email-ids: "Email IDs (separated by commas)",
 
-  // Color of the footer.
-  footer_color: "Hex Color Code",
+  // Color of the header & footer.
+  header-color: "Hex Color Code",
+  footer-color: "Hex Color Code",
 
   // DEFAULTS
   // ========
@@ -61,16 +62,19 @@
   univ_image_column_size: "8",
 
   // Poster title's font size (in pt).
-  title_font_size: "48",
+  title_font_size: 102,
+  title_font_color: "FFFFFF",
 
   // Authors' font size (in pt).
   authors_font_size: "36",
+  authors_font_color: "FFFFFF",
 
   // Footer's URL and email font size (in pt).
   footer_url_font_size: "36",
 
   // Footer's text font size (in pt).
   footer_text_font_size: "36",
+  footer_text_font_color: "FFFFFF",
 
   // The poster's content.
   body
@@ -106,17 +110,17 @@
       #set align(center)
       #set text(32pt) // altered for 72 x 30
       #block(
-        fill: rgb(footer_color),
+        fill: rgb(footer-color),
         width: 100%,
         inset: 20pt,
         radius: 10pt,
     // note fonts modifiable in the footer
         [
-          #text(size: footer_text_font_size, smallcaps(footer_text)) 
+          #text(size: footer_text_font_size, smallcaps(footer-text), fill: rgb(footer_text_font_color)) 
           #h(1fr) 
-          #text(font: "Open Sans", size: footer_url_font_size, footer_url) 
+          #text(font: "Open Sans", size: footer_url_font_size, footer-url, fill: rgb(footer_text_font_color)) 
           #h(1fr) 
-          #text(font: "Open Sans", size:  footer_url_font_size, footer_email_ids)
+          #text(font: "Open Sans", size:  footer_url_font_size, footer-email-ids, fill: rgb(footer_text_font_color))
         ]
       )
     ]
@@ -134,7 +138,9 @@
   // Configure headings.
   // modify numbering as desired, if any
   set heading(numbering: "I.A.1.")
-  show heading: it => locate(loc => {
+  show heading: it => context {
+    let loc = here()
+
     // Find out the final number of the heading counter.
     let levels = counter(heading).at(loc)
     let deepest = if levels != () {
@@ -176,35 +182,39 @@
       }
       _#(it.body):_
     ]
-  })
+  }
 
-  // Arranging the logo, title, authors, and department in the header.
-  // Could add a 3rd column for Michigan image of hospital or campus
   // extra line break "\n" added to authors to separate from title
   // emph() causes italics
   //inset pads around the text, radius rounds the corners
  align(center,
+ block(
+  fill: rgb(header-color),
+  inset: 30pt,
+  radius: 15pt,
     grid(
-      rows: 2,
-      columns: (univ_logo_column_size, title_column_size, univ_image_column_size),
-      column-gutter: 5pt,
+      rows: 1,
+      columns: ( 500pt, 1fr, 450pt ),
+      column-gutter: 0em,
       row-gutter: 5pt,
-      image(univ_logo, width: univ_logo_scale),
-      box(stroke: rgb("#ffcb05") + 10pt, 
-          fill: rgb("#00274c"),
-            text(title_font_size, title + "\n", 
-            fill: rgb("#ffcb05")) + 
+
+      align(horizon,
+      image(univ-logo, width: 415pt)),
+
+      align(horizon,
+      text(title_font_size, title + "\n", 
+            fill: rgb(title_font_color)) + 
             text(authors_font_size, emph("\n" + authors) + 
-            "\n" + departments, fill: rgb("#ffcb05")), 
-          radius: 15pt, inset: 30pt),
-      image(univ_image, width: univ_image_scale)
+            "\n" + departments, fill: rgb(authors_font_color))),
+
+      image(univ-image, width: univ_image_scale)
     )
-  )
+  ))
 
   // Start three column mode and configure paragraph properties.
   show: columns.with(num_columns, gutter: 64pt)
   set par(justify: true, first-line-indent: 0em)
-  show par: set block(spacing: 0.65em)
+  show par: set par(spacing: 0.65em)
 
   // Display the keywords.
   if keywords != () [
