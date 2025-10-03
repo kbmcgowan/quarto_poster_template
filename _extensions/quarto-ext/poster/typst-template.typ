@@ -137,7 +137,8 @@
 
   // Configure headings.
   // modify numbering as desired, if any
-  set heading(numbering: "I.A.1.")
+  // to enable section numbering, change 'none' to something like "I.A.1."
+  set heading(numbering: none )
   show heading: it => context {
     let loc = here()
 
