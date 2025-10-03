@@ -22,41 +22,46 @@ format:
     footer_url_font_size: 18
     footer_text_font_size: 18
     footer-url: "Download this poster from: https://phonetics.as.uky.edu/research/asc/midphon30/"
+bibliography: zotero-references.bib
+csl: apa.csl
 ---
 
 # Background
 
-- Background Text with bullets
-- More information
-- Even more information
-- Even more information than you wanted
+-   Listeners can identify vowel quality in a BVC syllable even with a substantial portion of the vowel removed (see @fig-strange) [@strange2013]
+-   More information
+-   Even more information
+-   Even more information than you wanted
 
-{{< lipsum 1 >}}
+```{r}
+#| echo: FALSE
+#| out.width: 100%
+#| label: fig-strange
+#| fig.cap: "Schematic representation of silent centers stimuli [@jenkins1983identification]"
+#| fig.align: "center"
+knitr::include_graphics('./images/StrangeJenkins2013.png')
+```
 
 # Methods
 
-{{< lipsum 1 random=true >}}
+1.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
+2.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
+3.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
 
-1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-
-Now we will lay out a manual markdown table with a title. The title is placed after the table. The title is a markdown header, so it will be formatted as such. We are using math notation to get the Greek letters. You can get more details on making markdown tables here (https://quarto.org/docs/authoring/tables.html). This is fine for simple, small tables with few cells. 
+Now we will lay out a manual markdown table with a title. The title is placed after the table. The title is a markdown header, so it will be formatted as such. We are using math notation to get the Greek letters. You can get more details on making markdown tables here (https://quarto.org/docs/authoring/tables.html). This is fine for simple, small tables with few cells.
 
 # Predictions
 
 For larger, more complicated tables, you may want to use the {gt} package.
 
-| Default                | Right       | Center     |
-|------------------------|-------------:|:------------:|
-| Lorem ipsum dolor.     | Lorem ipsum. | $\alpha$     |
-| Lorem ipsum.           | Lorem ipsum. | $\beta$      |
-| Lorem.                 | Lorem.       | $\gamma$     |
-| Lorem ipsum dolor.     | Lorem.       | $\theta$     |
+| Default            |        Right |  Center  |
+|--------------------|-------------:|:--------:|
+| Lorem ipsum dolor. | Lorem ipsum. | $\alpha$ |
+| Lorem ipsum.       | Lorem ipsum. | $\beta$  |
+| Lorem.             |       Lorem. | $\gamma$ |
+| Lorem ipsum dolor. |       Lorem. | $\theta$ |
 
 : This is a Table Title {#tbl-1}
-
-`#colbreak()`{=typst}
 
 # Results
 
@@ -71,11 +76,11 @@ knitr::include_graphics('./images/Standard_lettering.png')
 ```
 
 \
-We can use backslashes to create line breaks in the markdown text. This is a very useful feature for making the text more readable.
-\
+We can use backslashes to create line breaks in the markdown text. This is a very useful feature for making the text more readable.\
 \
 
-## Now a more complex table made with {gt_tbl} 
+## Now a more complex table made with {gt_tbl}
+
 \
 
 ```{r}
@@ -158,38 +163,33 @@ penguin_table |>
 
 # Discussion
 
-We will start with a random **math** equation, just to show that quarto and typst can do _math_. Now some random text so that the yellow box spans two columns. Ut enim aeque doleamus animo, cum corpore dolemus, fieri tamen permagna accessio potest, si aliquod aeternum et infinitum impendere malum nobis opinemur.We will put this next part in a **maize-colored box** to make it stand out.
+We will start with a random **math** equation, just to show that quarto and typst can do *math*. Now some random text so that the yellow box spans two columns. Ut enim aeque doleamus animo, cum corpore dolemus, fieri tamen permagna accessio potest, si aliquod aeternum et infinitum impendere malum nobis opinemur.We will put this next part in a **maize-colored box** to make it stand out.
 
-::: {.block fill=rgb("FFCB05") inset="10pt" radius="4pt" stroke="2pt + black" } 
-
-
+::: {.block fill="rgb(\"FFCB05\")" inset="10pt" radius="4pt" stroke="2pt + black"}
 $$
 \sum_(k=1)^n k = \frac{(n(n+1))}{2} = \frac{(n^2 + n)}{2}
 $$
 
-- That was a math equation bracketed by $ (which invokes the math translator), notice that the box extends across column breaks. Watch the indent when this extends across a whole line. Note that this box does not have a lot of inset padding, unlike the gray box below, where the text can 'breathe'. 
-- Also notice how rounded the corners are (radius) in the two different boxes.
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-
+-   That was a math equation bracketed by \$ (which invokes the math translator), notice that the box extends across column breaks. Watch the indent when this extends across a whole line. Note that this box does not have a lot of inset padding, unlike the gray box below, where the text can 'breathe'.
+-   Also notice how rounded the corners are (radius) in the two different boxes.
+-   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
 :::
+
 \
 
-## Implications in a Gray Box (0[black]-255[white]) with a Blue Border
+## Implications in a Gray Box (0\[black\]-255\[white\]) with a Blue Border
 
 \
 
 ::: {.block fill="luma(210)" inset="25pt" radius="15pt" stroke="5pt + blue"}
-
-1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-
+1.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
+2.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
+3.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
+4.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
+5.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
 :::
 
-Now inserting another plot and controlling the height and width in inches on this 72 in poster. Note the backslash (for a line break) is used on a line by itself to give us a bit of separation between the text and the plot.
-\
+Now inserting another plot and controlling the height and width in inches on this 72 in poster. Note the backslash (for a line break) is used on a line by itself to give us a bit of separation between the text and the plot.\
 
 ```{r}
 #| echo: FALSE
@@ -228,9 +228,11 @@ foo +
 
 \
 
-:::: {layout-ncol="2"}
-::: {}
+::::: {layout-ncol="2"}
+<div>
+
 # Stimuli
+
 ```{r, echo=FALSE}
 #| message: false
 #| warning: false
@@ -239,10 +241,13 @@ refs <- qr_code("https://phonetics.as.uky.edu/research/asc/midphon30/#stimuli")
 plot(refs)
 
 ```
-:::
 
-::: {}
+</div>
+
+<div>
+
 # References
+
 ```{r, echo=FALSE}
 #| message: false
 #| warning: false
@@ -251,8 +256,6 @@ refs <- qr_code("https://phonetics.as.uky.edu/research/asc/midphon30/#references
 plot(refs)
 
 ```
-:::
-::::
 
-
-
+</div>
+:::::
