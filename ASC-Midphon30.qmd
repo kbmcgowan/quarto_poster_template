@@ -1,5 +1,6 @@
 ---
 title: Listeners do not need an F1/F2 target to perceive vowel quality _or_ regional accentedness
+tbl-cap-location: bottom
 format:
   poster-typst: 
     size: "48x36"
@@ -44,10 +45,10 @@ Now we will lay out a manual markdown table with a title. The title is placed af
 
 # Predictions
 
-For larger, more complicated tables, you will want to use the {gt} package.
+For larger, more complicated tables, you may want to use the {gt} package.
 
-| Column 1               | Col2         | Column 3     |
-|------------------------|--------------|--------------|
+| Default                | Right       | Center     |
+|------------------------|-------------:|:------------:|
 | Lorem ipsum dolor.     | Lorem ipsum. | $\alpha$     |
 | Lorem ipsum.           | Lorem ipsum. | $\beta$      |
 | Lorem.                 | Lorem.       | $\gamma$     |
@@ -74,7 +75,7 @@ We can use backslashes to create line breaks in the markdown text. This is a ver
 \
 \
 
-## Now a fancy table made with the {gt} package 
+## Now a more complex table made with {gt_tbl} 
 \
 
 ```{r}
@@ -119,11 +120,7 @@ spanners_and_header <- function(gt_tbl) {
     tab_spanner(
       label =  md('**Gentoo**'),
       columns = contains('Gentoo')
-    ) |> 
-    tab_header(
-      title = 'Penguins in the Palmer Archipelago',
-      subtitle = 'Data is courtesy of the {palmerpenguins} R package'
-    ) 
+    )
 }
 
 penguin_table <- penguin_counts_wider |> 
@@ -148,12 +145,12 @@ penguin_table <- penguin_counts_wider |>
     missing_text = '-'
   )  |> 
   tab_options(
-    table.font.size = px(32),
+    table.font.size = px(38),
     data_row.padding = px(2),
     summary_row.padding = px(3), # A bit more padding for summaries
     row_group.padding = px(4)    # And even more for our groups
   ) |> 
-  opt_stylize(style = 6, color = 'blue')
+  opt_stylize(style = 3, color = 'blue')
 
 penguin_table |> 
   as_raw_html()
