@@ -238,9 +238,9 @@
   meander.reflow({
     import meander: *
 
-    container(width: 25%, height: 85%)
+    container(width: 26%, height: 85%)
     container(align: center, width: 45%, height: 85%)
-    container(align: right, width: 25%, height: 85%)
+    container(align: right, width: 26%, height: 85%)
 
     content[
       #text(science)

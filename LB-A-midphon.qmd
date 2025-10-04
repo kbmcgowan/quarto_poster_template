@@ -1,0 +1,177 @@
+---
+title: Italian-American identity through phonology
+format:
+  poster-typst: 
+    size: "48x36"
+    poster-authors: "Lindsey Bishop-Allen"
+    departments: "Department of Linguistics, University of Kentucky"
+    header-color: "265CA4"
+    univ-logo: "./images/Department-of-Linguistics-white.png"
+    univ-image: "./images/speech-is-social.png"
+ 
+    title_font_size: 80
+    authors_font_size: 38
+    font-size: 32   
+    
+    footer_url_font_size: 16
+    footer_text_font_size: 16
+    footer_text_font_color: "FFFFFF"
+
+    footer-text: "Midphon 30"
+    footer-emails: "bishop.allen@uky.edu"
+    footer-color: "265CA4"
+    footer-text-color: "FFFFFF"
+    footer-url: "Download this poster from: https://phonetics.as.uky.edu/research/asc/midphon30/"
+---
+
+
+```{r}
+#| echo: FALSE
+#| message: FALSE
+
+library(tidyverse)
+```
+
+# Background
+
+- Background Text with bullets
+- More information
+- Even more information
+- Even more information than you wanted
+
+\
+
+{{< lipsum 1 >}}
+
+# Methods
+
+{{< lipsum 1 random=true >}}
+
+\
+
+1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
+1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
+1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
+
+\
+
+Now we will lay out a manual markdown table with a title. The title is placed after the table. The title is a markdown header, so it will be formatted as such. We are using math notation to get the Greek letters. You can get more details on making markdown tables here (https://quarto.org/docs/authoring/tables.html). This is fine for simple, small tables with few cells.
+
+\
+
+| Column 1               | Col2         | Column 3     |
+|------------------------|--------------|--------------|
+| Lorem ipsum dolor.     | Lorem ipsum. | $\alpha$     |
+| Lorem ipsum.           | Lorem ipsum. | $\beta$      |
+| Lorem.                 | Lorem.       | $\gamma$     |
+| Lorem ipsum dolor.     | Lorem.       | $\theta$     |
+
+: This is a Table Title {#tbl-1}
+
+\
+\
+\
+
+# Results
+
+We will place a figure or image below using markdown syntax. We can specify the caption and specifying height or width (or both). The figures are numbered automatically.
+
+```{r}
+#| echo: FALSE
+#| out.width: 100%
+#| fig.cap: "The details of a specific serif font."
+#| fig.align: "center"
+knitr::include_graphics('./images/Standard_lettering.png')
+```
+
+\
+We can use backslashes to create line breaks in the markdown text. This is a very useful feature for making the text more readable.
+\
+
+
+# Discussion
+
+We will start with a random **math** equation, just to show that quarto and typst can do _math_. Now some random text so that the yellow box spans two columns. Ut enim aeque doleamus animo, cum corpore dolemus, fieri tamen permagna accessio potest, si aliquod aeternum et infinitum impendere malum nobis opinemur.We will put this next part in a **maize-colored box** to make it stand out.
+
+\
+
+::: {.block fill=rgb("FFCB05") inset="10pt" radius="4pt" stroke="2pt + black" } 
+
+
+$$
+\sum_(k=1)^n k = \frac{(n(n+1))}{2} = \frac{(n^2 + n)}{2}
+$$
+
+- That was a math equation bracketed by $ (which invokes the math translator), notice that the box extends across column breaks. Watch the indent when this extends across a whole line. Note that this box does not have a lot of inset padding, unlike the gray box below, where the text can 'breathe'. 
+- Also notice how rounded the corners are (radius) in the two different boxes.
+- Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
+
+:::
+\
+
+## Implications in a Gray Box (0[black]-255[white]) with a Blue Border
+
+\
+
+::: {.block fill="luma(210)" inset="25pt" radius="15pt" stroke="5pt + blue"}
+
+1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
+1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
+1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
+1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
+1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
+
+:::
+
+\
+
+Now inserting another plot and controlling the height and width in inches on this 72 in poster. Note the backslash (for a line break) is used on a line by itself to give us a bit of separation between the text and the plot.
+\
+\
+
+```{r}
+#| echo: FALSE
+#| fig.cap: "A fabulous plot made in R."
+#| fig.align: "center"
+#| fig.width: 18
+#| fig.height: 10
+palmerpenguins::penguins |> 
+  ggplot(aes(x = species, fill = species)) +
+  geom_bar() +
+  theme_minimal(base_size = 32) +
+  labs(title = 'Penguin Species Distribution')
+```
+
+\
+
+::::: {layout-ncol="2"}
+<div>
+
+# Stimuli
+
+```{r, echo=FALSE}
+#| message: false
+#| warning: false
+library(qrcode)
+refs <- qr_code("https://phonetics.as.uky.edu/research/asc/midphon30/#stimuli")
+plot(refs)
+
+```
+
+</div>
+
+<div>
+
+# References
+
+```{r, echo=FALSE}
+#| message: false
+#| warning: false
+library(qrcode)
+refs <- qr_code("https://phonetics.as.uky.edu/research/asc/midphon30/#references")
+plot(refs)
+
+```
+
+</div>
+:::::
