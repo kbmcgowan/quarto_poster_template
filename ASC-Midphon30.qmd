@@ -9,29 +9,29 @@ format:
     header-color: "265CA4"
     univ-logo: "./images/Department-of-Linguistics-white.png"
     univ-image: "./images/speech-is-social.png"
-    title_font_size: 90
-    authors_font_size: 42
+    title_font_size: 80
+    authors_font_size: 38
 
-    font-size: 38
+    font-size: 32
     
     footer-text: "Midphon 30"
     footer-emails: "kbmcgowan@uky.edu, stakvoryan@uky.edu"
     footer-color: "265CA4"
     footer-text-color: "FFFFFF"
     footer_text_font_color: "FFFFFF"
-    footer_url_font_size: 18
-    footer_text_font_size: 18
+    footer_url_font_size: 16
+    footer_text_font_size: 16
     footer-url: "Download this poster from: https://phonetics.as.uky.edu/research/asc/midphon30/"
+
+#we want to use pandoc instead of typst for bibliography
+# (so we can suppress it if we so desire)
+citeproc: true
 bibliography: zotero-references.bib
 csl: apa.csl
+suppress-bibliography: true
 ---
 
 # Background
-
--   Listeners can identify vowel quality in a BVC syllable even with a substantial portion of the vowel removed (see @fig-strange) [@strange2013]
--   More information
--   Even more information
--   Even more information than you wanted
 
 ```{r}
 #| echo: FALSE
@@ -41,6 +41,10 @@ csl: apa.csl
 #| fig.align: "center"
 knitr::include_graphics('./images/StrangeJenkins2013.png')
 ```
+-   Listeners can identify vowel quality in a BVC syllable even with a substantial portion of the vowel removed (see @fig-strange) [@strange2013]
+-   Even works for hybrid syllables 
+-   But sociolinguisitcs, sound change, intrinsic and extrinsic normalization, 
+
 
 # Methods
 
@@ -48,7 +52,10 @@ knitr::include_graphics('./images/StrangeJenkins2013.png')
 2.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
 3.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
 
-Now we will lay out a manual markdown table with a title. The title is placed after the table. The title is a markdown header, so it will be formatted as such. We are using math notation to get the Greek letters. You can get more details on making markdown tables here (https://quarto.org/docs/authoring/tables.html). This is fine for simple, small tables with few cells.
+\
+
+Now we will lay out a manual markdown table with a title.
+
 
 # Predictions
 
@@ -62,6 +69,11 @@ For larger, more complicated tables, you may want to use the {gt} package.
 | Lorem ipsum dolor. |       Lorem. | $\theta$ |
 
 : This is a Table Title {#tbl-1}
+
+\
+\
+\
+\
 
 # Results
 
@@ -79,91 +91,12 @@ knitr::include_graphics('./images/Standard_lettering.png')
 We can use backslashes to create line breaks in the markdown text. This is a very useful feature for making the text more readable.\
 \
 
-## Now a more complex table made with {gt_tbl}
-
-\
-
-```{r}
-#| echo: FALSE
-#| message: FALSE
-
-library(tidyverse)
-library(gt)
-library(palmerpenguins)
-penguins <- palmerpenguins::penguins |> filter(!is.na(sex))
-
-penguin_counts <- penguins |> 
-  mutate(year = as.character(year)) |> 
-  group_by(species, island, sex, year) |> 
-  summarise(n = n(), .groups = 'drop')
-
-penguin_counts_wider <- penguin_counts |> 
-  pivot_wider(
-    names_from = c(species, sex),
-    values_from = n
-  ) |> 
-  # Make missing numbers (NAs) into zero
-  mutate(across(.cols = -(1:2), .fns = ~replace_na(., replace = 0))) |> 
-  arrange(island, year) 
-
-actual_colnames <- colnames(penguin_counts_wider)
-desired_colnames <- actual_colnames |> 
-  str_remove('(Adelie|Gentoo|Chinstrap)_') |> 
-  str_to_title()
-names(desired_colnames) <- actual_colnames
-
-spanners_and_header <- function(gt_tbl) {
-  gt_tbl |> 
-    tab_spanner(
-      label = md('**Adelie**'),
-      columns = 3:4
-    ) |> 
-    tab_spanner(
-      label = md('**Chinstrap**'),
-      columns = c('Chinstrap_female', 'Chinstrap_male')
-    ) |> 
-    tab_spanner(
-      label =  md('**Gentoo**'),
-      columns = contains('Gentoo')
-    )
-}
-
-penguin_table <- penguin_counts_wider |> 
-  mutate(across(.cols = -(1:2), ~if_else(. == 0, NA_integer_, .))) |> 
-  mutate(
-    island = as.character(island), 
-    year = as.numeric(year),
-    island = paste0('Island: ', island)
-  ) |> 
-  gt(groupname_col = 'island', rowname_col = 'year') |> 
-  cols_label(.list = desired_colnames) |> 
-  spanners_and_header()  |> 
-  sub_missing(missing_text = '-') |>
-  summary_rows(
-    groups = TRUE,
-    fns = list(
-      'Maximum' = ~max(.),
-      'Total' = ~sum(.) 
-    ),
-    formatter = fmt_number,
-    decimals = 0,
-    missing_text = '-'
-  )  |> 
-  tab_options(
-    table.font.size = px(38),
-    data_row.padding = px(2),
-    summary_row.padding = px(3), # A bit more padding for summaries
-    row_group.padding = px(4)    # And even more for our groups
-  ) |> 
-  opt_stylize(style = 3, color = 'blue')
-
-penguin_table |> 
-  as_raw_html()
-```
 
 # Discussion
 
 We will start with a random **math** equation, just to show that quarto and typst can do *math*. Now some random text so that the yellow box spans two columns. Ut enim aeque doleamus animo, cum corpore dolemus, fieri tamen permagna accessio potest, si aliquod aeternum et infinitum impendere malum nobis opinemur.We will put this next part in a **maize-colored box** to make it stand out.
+
+\
 
 ::: {.block fill="rgb(\"FFCB05\")" inset="10pt" radius="4pt" stroke="2pt + black"}
 $$
@@ -189,6 +122,8 @@ $$
 5.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
 :::
 
+\
+
 Now inserting another plot and controlling the height and width in inches on this 72 in poster. Note the backslash (for a line break) is used on a line by itself to give us a bit of separation between the text and the plot.\
 
 ```{r}
@@ -201,6 +136,9 @@ Now inserting another plot and controlling the height and width in inches on thi
   
 library(ggthemes)
 library(phonTools)
+library(tidyverse)
+
+
 data(pb52)
 
 bar <- pb52 %>%
@@ -259,3 +197,4 @@ plot(refs)
 
 </div>
 :::::
+

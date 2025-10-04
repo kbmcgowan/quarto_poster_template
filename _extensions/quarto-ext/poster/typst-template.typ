@@ -1,3 +1,5 @@
+#import "@preview/meander:0.2.2"
+
 #set table(
    inset: 6pt,
    stroke: none
@@ -81,7 +83,7 @@
   footer_text_font_color: "FFFFFF",
 
   // The poster's content.
-  body
+  science
 ) = {
   // Set the body font. Use a Google Font you like. Set size. Here we used Open Sans.
   set text(font: "Open Sans", size: 32pt) // Can change to 12pt for small size
@@ -216,18 +218,33 @@
     )
   ))
 
+  block( below: 0pt )
+
   // Start three column mode and configure paragraph properties.
-  show: columns.with(num_columns, gutter: 64pt)
+  //show: columns.with(num_columns, gutter: 64pt)
+  //show: grid.with(
+  //  columns: (1fr, 2fr, 1fr),
+  //  inset: 5pt,
+  //  rows: (auto),
+  //  stroke: (paint: blue, thickness: 1pt, dash: "dashed"), // just to visualize the columns
+  //  gutter: 55pt
+  //)
+
   set par(justify: true, first-line-indent: 0em)
+  set text(hyphenate: true)
   show par: set par(spacing: 0.65em)
 
-  // Display the keywords.
-  if keywords != () [
-      #set text(24pt, weight: 400)
-      #show "Keywords": smallcaps
-      *Keywords* --- #keywords.join(", ")
-  ]
-
   // Display the poster's contents.
-  body
+  meander.reflow({
+    import meander: *
+
+    container(width: 25%, height: 85%)
+    container(align: center, width: 45%, height: 85%)
+    container(align: right, width: 25%, height: 85%)
+
+    content[
+      #text(science)
+    ]
+
+  })
 }
