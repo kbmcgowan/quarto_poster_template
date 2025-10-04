@@ -1,29 +1,12 @@
 Open a pdf file (above) to see an example.
 
-To get started making your own poster from R, you will need to:
-- fork and branch this repo to a local New Project/Version Control/Github repo on your computer in RStudio
-(follow this workflow if this is new to you https://blog.scottlowe.org/2015/01/27/using-fork-branch-git-workflow/ )
-- copy and rename the poster.qmd file in the size that you want to a new qmd file
-- edit this file to change title, authors, department, etc
-- edit this file to include your poster content, including gt tables, gtsummary tables, plots, and images.
+If you're a lab member looking to get started making your own poster in R studio, you just need to:
+- download the code (Code > Download Zip)
+- copy or rename one of the example .qmd files
+- edit this file to change title, authors, department, and your content
 - fine tune font sizes in the YAML header
-- add line breaks with '\' on a separate line
+- add line breaks with '\' on a separate line to adjust spacing
 
-- Make adjustments in the YAML header
-  - adjust poster dimensions (in inches, width then height)
-  - title, authors, departments
-  - title-column-size, title-font-size
-  - authors-font-size 
-  - font-size for body text
-  - univ-logo-column-size: 3
-  - footer-text, footer-emails, footer-url, footer-color
-  - [new] header-color, header-text-color
-- click on the Web page icon at the top left of the Viewer tab to open your pdf in a larger webpage window, scale as needed.
+Let someone else know if you need/want access to the repository to make changes to the template.
 
-- If the layout does not work, potentially edit the '/_extensions/quarto-ext/poster/typst-template.typ' file to change the layout of the poster
-  - key variables include:
-    - body - in this section, you might change the body font (any font from Google Fonts - find one you like)
-    - body - in this section, you might change the body font size
-    - configure lists - change indents for numbered and bulleted lists
-    - configure headings - can change font, alignment, size, numbering
-    - arrange logo, title, vertical spacing with \n commands
+Non lab members, you should probably not use this fork.
