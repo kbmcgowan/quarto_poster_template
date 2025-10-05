@@ -342,7 +342,7 @@ Silent centers (SC): listeners can identify vowel quality in a CVC syllable even
 #| label: fig-worms
 #| echo: FALSE
 #| out.width: 100%
-#| fig.cap: "Vowel stimuli DCTS with excised portions indicated"
+#| fig.cap: "Vowel stimuli unnormed F1/F2 DCTS with excised portions indicated"
 #| fig.align: "center"
 
 param_idct_unnorm <- param_df |>
@@ -442,23 +442,393 @@ traj_idct_unnorm |>
 
 # Results
 
-We will place a figure or image below using markdown syntax. We can specify the caption and specifying height or width (or both). The figures are numbered automatically.
-
 ```{r}
-#| echo: FALSE
-#| out.width: 100%
-#| fig.cap: "The details of a specific serif font."
-#| fig.align: "center"
-knitr::include_graphics('./images/Standard_lettering.png')
+#| label: modeling
+#| message: false
+#| warning: false
+#| include: false
+
+what_mod1 <- brm(
+  response ~ manipulation * region * tense_lax + (1 | participant) + (1 | target_word),
+  data = what_afc,
+  backend = "cmdstanr",
+  family = bernoulli(),
+  file = "models/what_mod1",
+  file_refit = "on_change",
+  warmup = 1000, iter = 5000, chains = 4,
+  cores = 6
+)
+
+who_mod1 <- brm(
+  response ~ manipulation * region * tense_lax + (1 | participant) + (1 | middle),
+  data = who_afc,
+  backend = "cmdstanr",
+  family = bernoulli(),
+  file = "models/who_mod1",
+  file_refit = "on_change",
+  warmup = 1000, iter = 5000, chains = 4,
+  cores = 6
+)
+
+what_rt_mod <- brm(
+  what_rt ~ manipulation * region * tense_lax + (1 | participant) + (1 | minimal_pair),
+  data = what_afc,
+  backend = "cmdstanr",
+  family = lognormal(),
+  file = "models/what_rt_mod",
+  file_refit = "on_change",
+  warmup = 1000, iter = 5000, chains = 4,
+  cores = 6
+)
+
+who_rt_mod <- brm(
+  who_rt ~ manipulation * region * tense_lax + (1 | participant) + (1 | middle),
+  data = who_afc,
+  backend = "cmdstanr",
+  family = lognormal(),
+  file = "models/who_rt_mod",
+  file_refit = "on_change",
+  warmup = 1000, iter = 5000, chains = 4,
+  cores = 6
+)
 ```
 
-\
-\
+```{r}
+#| label: fig-model-predictions
+#| echo: false
+#| message: false
+#| warning: false
+#| out.width: 100%
+#| fig.cap: "'What?' (top left) and 'Who?' (bottom left) model predictions (95% HDI) and Accuracy differences for responses to Non-Southern (top right) and Southern (bottom right) talkers"
+#| fig.align: "center"
+
+what_pred <- what_mod1 |>
+  plot_predictions(
+    newdata = datagrid(
+      manipulation = unique,
+      region = unique,
+      tense_lax = unique
+    ),
+    by = c("manipulation", "region", "tense_lax"),
+    re_formula = NA,
+    type = "link",
+    draw = FALSE
+  ) |>
+  ggplot(
+    aes(
+      x = region,
+      y = estimate,
+      fill = manipulation
+    )
+  ) +
+  geom_bar(
+    stat = "identity",
+    position = "dodge"
+    ) +
+  geom_pointrange(
+    aes(
+      ymin = conf.low,
+      ymax = conf.high
+    ),
+    position=position_dodge(width = 0.9),
+    size = .3
+  )  +
+  labs(
+    y = "Likelihood of target",
+    x = "",
+    fill = "",
+    title = "'What?'",
+    caption = "response ~ manipulation * region * tense_lax + (1|participant) + (1|target_word)"
+  ) +
+  scale_fill_manual(
+    values = c("thistle3", "mediumpurple4")
+  ) +
+  facet_grid(~tense_lax) +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    plot.caption = element_text(size = 4)
+  )
+
+who_pred <- who_mod1 |>
+  plot_predictions(
+    newdata = datagrid(
+      manipulation = unique,
+      region = unique,
+      tense_lax = unique
+    ),
+    by = c("manipulation", "region", "tense_lax"),
+    re_formula = NA,
+    type = "link",
+    draw = FALSE
+  ) |>
+  ggplot(
+    aes(
+      x = region,
+      y = estimate,
+      fill = manipulation
+    )
+  ) +
+  geom_bar(
+    stat = "identity",
+    position = "dodge"
+    ) +
+  geom_pointrange(
+    aes(
+      ymin = conf.low,
+      ymax = conf.high
+    ),
+    position=position_dodge(width = 0.9),
+    size = .3
+  )  +
+  labs(
+    y = "Likelihood of target",
+    x = "",
+    fill = "",
+    title = "'Who?'",
+    caption = "response ~ manipulation * region * tense_lax + (1|participant) + (1|middle)"
+  )  +
+  scale_fill_manual(
+    values = c("thistle3", "mediumpurple4")
+  ) +
+  facet_grid(~tense_lax) +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    plot.caption = element_text(size = 4)
+  )
+
+predictions <- ggarrange(
+  what_pred,
+  who_pred,
+  nrow = 2,
+  common.legend = TRUE
+)
+
+who <- who_afc |>
+  mutate(
+    sound_file = str_replace(
+      sound_file,
+      pattern = "resources/", replacement = ""
+    )
+  ) |>
+  mutate(
+    sound_file = str_replace(
+      sound_file,
+      pattern = "-SC.wav", replacement = ""
+  )
+  ) |>
+  mutate(
+    sound_file = str_replace(
+      sound_file,
+      pattern = ".wav", replacement = ""
+  )
+  )
+
+what <- what_afc |>
+  mutate(
+    sound_file = str_replace(
+      sound_file,
+      pattern = "resources/", replacement = ""
+    )
+  ) |>
+  mutate(
+    sound_file = str_replace(
+      sound_file,
+      pattern = "-SC.wav", replacement = ""
+  )
+  ) |>
+  mutate(
+    sound_file = str_replace(
+      sound_file,
+      pattern = ".wav", replacement = ""
+  )
+  )
+
+# merge
+
+who_dct <- merge(
+  who, 
+  param_df,
+  by.x = "sound_file",
+  by.y = "file_name"
+)
+
+what_dct <- merge(
+  what, 
+  param_df,
+  by.x = "sound_file",
+  by.y = "file_name"
+)
+
+who_dct <- who_dct |>
+   pivot_longer(
+    cols = F1:F2,
+    names_to = "formants",
+    values_to = "hz"
+  ) |>
+  filter(
+    param <= 2
+  ) |>
+  pivot_wider(
+    names_from = c(formants, param),
+    values_from = "hz"
+  )
+
+south_who_dct <- who_dct |>
+  filter(
+    region.y == "southern"
+  )
+
+nonsouth_who_dct <- who_dct |>
+  filter(
+    region.y == "nonsouthern"
+  )
+
+what_dct <- what_dct |>
+   pivot_longer(
+    cols = F1:F2,
+    names_to = "formants",
+    values_to = "hz"
+  ) |>
+  filter(
+    param <= 2
+  ) |>
+  pivot_wider(
+    names_from = c(formants, param),
+    values_from = "hz"
+  )
+
+south_what_dct <- what_dct |>
+  filter(
+    region.y == "southern"
+  )
+
+nonsouth_what_dct <- what_dct |>
+  filter(
+    region.y == "nonsouthern"
+  )
+
+# models
+
+south_who_dct_mod <- brm(
+  response ~ (F1_1 + F2_1) * manipulation * tense_lax + (1 | participant) + (1 | vowel),
+  data = south_who_dct,
+  backend = "cmdstanr",
+  family = bernoulli(),
+  file = "models/south_who_dct",
+  file_refit = "on_change",
+  warmup = 1000, iter = 5000, chains = 4,
+  cores = 6
+)
+
+nonsouth_who_dct_mod <- brm(
+  response ~ (F1_1 + F2_1) * manipulation * tense_lax + (1 | participant) + (1 | vowel),
+  data = nonsouth_who_dct,
+  backend = "cmdstanr",
+  family = bernoulli(),
+  file = "models/nonsouth_who_dct",
+  file_refit = "on_change",
+  warmup = 1000, iter = 5000, chains = 4,
+  cores = 6
+)
+
+nonsouth_what_dct_mod <- brm(
+  response ~ (F1_1 + F2_1) * manipulation * tense_lax + (1 | participant) + (1 | vowel),
+  data = nonsouth_what_dct,
+  backend = "cmdstanr",
+  family = bernoulli(),
+  file = "models/nonsouth_what_dct",
+  file_refit = "on_change",
+  warmup = 1000, iter = 5000, chains = 4,
+  cores = 6
+)
+
+south_what_dct_mod <- brm(
+  response ~ (F1_1 + F2_1) * manipulation * tense_lax + (1 | participant) + (1 | vowel),
+  data = south_what_dct,
+  backend = "cmdstanr",
+  family = bernoulli(),
+  file = "models/south_what_dct",
+  file_refit = "on_change",
+  warmup = 1000, iter = 5000, chains = 4,
+  cores = 6
+)
+
+# avg comparisons
+south_who <- plot_comparisons(
+  south_who_dct_mod,
+  variables = "manipulation",
+  by = "tense_lax"
+) +
+  labs(
+    x = "",
+    y = " ",
+    title = "'who?' Southern",
+    caption = " "
+  ) +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 9)
+  )
+
+nonsouth_who <- plot_comparisons(
+  nonsouth_who_dct_mod,
+  variables = "manipulation",
+  by = "tense_lax"
+) +
+  labs(
+    x = "",
+    y = " ",
+    title = "'who?' Non-Southern"
+  ) +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 9)
+  )
+
+south_what <- plot_comparisons(
+  south_what_dct_mod,
+  variables = "manipulation",
+  by = "tense_lax"
+) +
+  labs(
+    x = "",
+    y = "Accuracy Δ (SC - Full)",
+    title = "'what?' Southern"
+  ) +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 9)
+  )
+
+nonsouth_what <- plot_comparisons(
+  nonsouth_what_dct_mod,
+  variables = "manipulation",
+  by = "tense_lax"
+) +
+  labs(
+    x = "",
+    y = "Accuracy Δ (SC - Full)",
+    title = "'what?' Non-Southern"
+  ) +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 9)
+  )
+
+comparisons <- ggarrange(
+  nonsouth_what,
+  nonsouth_who,
+  south_what,
+  south_who
+)
+
+ggarrange(
+  predictions,
+  comparisons
+)
+```
+
 \
 
 # Discussion
 
-{{< lipsum 3 >}}
+{{< lipsum 1 >}}
 
 \
 \
