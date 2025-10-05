@@ -498,9 +498,9 @@ who_rt_mod <- brm(
 #| echo: false
 #| message: false
 #| warning: false
-#| out.width: 100%
-#| fig.cap: "'What?' (top left) and 'Who?' (bottom left) model predictions (95% HDI) and Accuracy differences for responses to Non-Southern (top row) and Southern (bottom row) talkers"
-#| fig.align: "center"
+#| fig-cap: "'What?' (top left) and 'Who?' (bottom left) model predictions (95% HDI) and Accuracy differences for responses to Non-Southern (top row) and Southern (bottom row) talkers"
+#| fig-align: center
+#| out-width: 100%
 
 what_pred <- what_mod1 |>
   plot_predictions(
@@ -838,21 +838,24 @@ ggarrange(
 -   **Listeners do not need the vowel center to perceive regional accentedness**: Contra hybrid silent-centers work that paired incongruous syllable edges[@verbrugge1986evidence; @rakerd1987evidence], listeners to the 'who?' trials can, indeed, perceive regional accent from SC vowels
 -   **Regional differences for tense and lax vowel qualities**: different vowel qualities encode regional variation differently; some of this variation is captured by the tense/lax distinction
 
+\
+
 # Conclusions & Future Work
 
--   With V centers removed, social perception is possible, but not quite as robust as vowel quality. Centers may be more useful to listeners as a source of social information, but they are not essential.
+-   Social perception is more sensitive to SC than vowel quality. Centers may be more useful to listeners as a source of social information, but they are not essential.
 
 -   Researchers who use a single point measure to characterize the vowels of a talker or of a community are missing a great deal of information that listeners themselves use in perception.
 
 -   But even formant tracks or multiple points of measurement per vowel are only measuring vowel centers if they begin at 20% (or later) and end at 80% of V duration as the standard SC manipulation removes from 17.5% of a tense vowel to 82.5%
 
--   Tense/Lax: it may be that listeners need a greater percentage of a more dynamic vowel quality to perceive regional variation or this may be due to varying levels of awareness/stereotypicallity of vowels [@Babel2025]\
+-   Tense/Lax: it may be that listeners need a greater percentage of a more dynamic vowel quality to perceive regional variation or this may be due to varying levels of awareness/stereotypicallity of vowels [@Babel2025]
+
+-   If normalization happens at all, these results are inconsistent with a model of normalization that operates on a single F1/F2 measure (with or without duration) and more consistent with, e.g. [@fruehwald2025vowel] with sufficiently inclusive formant tracks
+
+\
 \
 
-![Schematic from original Silent Centers work](./images/StrangeJenkins2013.png){#fig-strange width="50%"}
-\
-
-::::: {layout-ncol="2"}
+::::: {layout="[40,60]"}
 <div>
 
 # References
@@ -869,9 +872,9 @@ plot(refs)
 
 <div>
 
-# Thanks
+# Acknowledgements
 
-We are grateful to Josef Fruehwald, Jennifer Cramer, Kyler Laycock, Kendal Smith, Austin Coleman, and Shane O'Nan for their invaluable assistance with this project.
+We are grateful to Josef Fruehwald, Jennifer Cramer, Kendal Smith, Austin Coleman, Kyler Laycock, and Shane O'Nan for their invaluable assistance with this project.
 
 </div>
 :::::

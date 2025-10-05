@@ -298,11 +298,11 @@ Silent centers (SC): listeners can identify vowel quality in a CVC syllable even
 
 1.  **Hybrid silent centers** [@rakerd1987evidence; @verbrugge1986evidence]: pairing SC syllable edges from different talkers does not undermine vowel perception so argue vowel edges do not carry social information
 
-2.  **Vowel normalization** [@johnson2005; @johnson2021speaker] assumes that variation is problematic for listeners so models typically operate on vowel centers where contextual variation is least [@barreda2025reintroducing] XXX cite Joe here too
+2.  **Vowel normalization** [@johnson2005; @johnson2021speaker] assumes that variation is problematic for listeners so models typically operate on vowel centers where contextual variation is least \[c.f. [@barreda2025; @fruehwald2024working]\]
 
 # Methodology
 
--   **Talkers**: Three non-Southern talkers from the Wildcat corpus [@Wildcat2010] and two Southern talkers recorded in Kentucky
+-   **Talkers**: Three non-Southern talkers from the Wildcat corpus [@Wildcat2010] and two Southern talkers (KY)
 
 -   **Stimuli**: BVT syllables with \[i, ɪ, e, ɛ, æ, u, ʊ, o, ʌ, ɔ, a\]; **middle 50% for lax vowels** & **middle 65% for tense vowels** [@10.1121/1.389855] excised with a custom Praat script (see @fig-worms)
 
@@ -316,7 +316,7 @@ Silent centers (SC): listeners can identify vowel quality in a CVC syllable even
 
 -   **Participants**: 60 US participants recruited via Prolific
 
--   **Analysis**: BRMS logistic regression in R [@bürkner2017], NHST with bayestestR [@makowski2019]
+-   **Analysis**: BRMS logistic regression in R [@bürkner2017], NHST with bayestestR [@makowski2019; @arel-bundock2024]
 
 -   Many studies have found that listeners perform poorly when asked to label regional accents [@milroy1977; @clopper2004; @campbell2025place]. Our simplified maps are intended to represent Clopper & Pisoni's "dialect clusters"
 
@@ -498,9 +498,9 @@ who_rt_mod <- brm(
 #| echo: false
 #| message: false
 #| warning: false
-#| out.width: 100%
-#| fig.cap: "'What?' (top left) and 'Who?' (bottom left) model predictions (95% HDI) and Accuracy differences for responses to Non-Southern (top right) and Southern (bottom right) talkers"
-#| fig.align: "center"
+#| fig-cap: "'What?' (top left) and 'Who?' (bottom left) model predictions (95% HDI) and Accuracy differences for responses to Non-Southern (top row) and Southern (bottom row) talkers"
+#| fig-align: center
+#| out-width: 100%
 
 what_pred <- what_mod1 |>
   plot_predictions(
@@ -534,10 +534,10 @@ what_pred <- what_mod1 |>
     size = .3
   )  +
   labs(
-    y = "Likelihood of target",
+    y = "Likelihood of target (What?)",
     x = "",
     fill = "",
-    title = "'What?'",
+   # title = "'What?'",
     caption = "response ~ manipulation * region * tense_lax + (1|participant) + (1|target_word)"
   ) +
   scale_fill_manual(
@@ -546,7 +546,9 @@ what_pred <- what_mod1 |>
   facet_grid(~tense_lax) +
   theme(
     plot.title = element_text(hjust = 0.5),
-    plot.caption = element_text(size = 5)
+    plot.caption = element_text(size = 5),
+    axis.title.y = element_text(size = 7),
+    axis.title.x = element_text(size = 7)
   )
 
 who_pred <- who_mod1 |>
@@ -581,10 +583,10 @@ who_pred <- who_mod1 |>
     size = .3
   )  +
   labs(
-    y = "Likelihood of target",
+    y = "Likelihood of target (Who?)",
     x = "",
     fill = "",
-    title = "'Who?'",
+   # title = "'Who?'",
     caption = "response ~ manipulation * region * tense_lax + (1|participant) + (1|middle)"
   )  +
   scale_fill_manual(
@@ -593,7 +595,9 @@ who_pred <- who_mod1 |>
   facet_grid(~tense_lax) +
   theme(
     plot.title = element_text(hjust = 0.5),
-    plot.caption = element_text(size = 5)
+    plot.caption = element_text(size = 5),
+    axis.title.y = element_text(size = 7),
+    axis.title.x = element_text(size = 7)
   )
 
 predictions <- ggarrange(
@@ -762,11 +766,12 @@ south_who <- plot_comparisons(
   labs(
     x = "",
     y = " ",
-    title = "'who?' Southern",
+    title = "'Who?'",
     caption = " "
   ) +
   theme(
-    plot.title = element_text(hjust = 0.5, size = 9)
+    plot.title = element_text(hjust = 0.5, size = 9),
+    axis.title.y = element_text(size = 8)
   )
 
 nonsouth_who <- plot_comparisons(
@@ -777,10 +782,11 @@ nonsouth_who <- plot_comparisons(
   labs(
     x = "",
     y = " ",
-    title = "'who?' Non-Southern"
+    title = "'Who?'"
   ) +
   theme(
-    plot.title = element_text(hjust = 0.5, size = 9)
+    plot.title = element_text(hjust = 0.5, size = 9),
+    axis.title.y = element_text(size = 8)
   )
 
 south_what <- plot_comparisons(
@@ -790,11 +796,12 @@ south_what <- plot_comparisons(
 ) +
   labs(
     x = "",
-    y = "Accuracy Δ (SC - Full)",
-    title = "'what?' Southern"
+    y = "Accuracy Δ (Southern)",
+    title = "'What?'"
   ) +
   theme(
-    plot.title = element_text(hjust = 0.5, size = 9)
+    plot.title = element_text(hjust = 0.5, size = 9),
+    axis.title.y = element_text(size = 8)
   )
 
 nonsouth_what <- plot_comparisons(
@@ -804,11 +811,12 @@ nonsouth_what <- plot_comparisons(
 ) +
   labs(
     x = "",
-    y = "Accuracy Δ (SC - Full)",
-    title = "'what?' Non-Southern"
+    y = "Accuracy Δ (Non-Southern)",
+    title = "'What?'"
   ) +
   theme(
-    plot.title = element_text(hjust = 0.5, size = 9)
+    plot.title = element_text(hjust = 0.5, size = 9),
+    axis.title.y = element_text(size = 8)
   )
 
 comparisons <- ggarrange(
@@ -824,16 +832,30 @@ ggarrange(
 )
 ```
 
-\
-
 # Discussion
 
-{{< lipsum 1 >}}
+-   **Listeners do not need the vowel center to perceive vowel quality (replicated)**: Listener accuracy on the 'what?' trials is a straightforward, successful replication of the silent centers effect [@strange2013; @10.1121/1.389855]
+-   **Listeners do not need the vowel center to perceive regional accentedness**: Contra hybrid silent-centers work that paired incongruous syllable edges[@verbrugge1986evidence; @rakerd1987evidence], listeners to the 'who?' trials can, indeed, perceive regional accent from SC vowels
+-   **Regional differences for tense and lax vowel qualities**: different vowel qualities encode regional variation differently; some of this variation is captured by the tense/lax distinction
+
+\
+
+# Conclusions & Future Work
+
+-   Social perception is more sensitive to SC than vowel quality. Centers may be more useful to listeners as a source of social information, but they are not essential.
+
+-   Researchers who use a single point measure to characterize the vowels of a talker or of a community are missing a great deal of information that listeners themselves use in perception.
+
+-   But even formant tracks or multiple points of measurement per vowel are only measuring vowel centers if they begin at 20% (or later) and end at 80% of V duration as the standard SC manipulation removes from 17.5% of a tense vowel to 82.5%
+
+-   Tense/Lax: it may be that listeners need a greater percentage of a more dynamic vowel quality to perceive regional variation or this may be due to varying levels of awareness/stereotypicallity of vowels [@Babel2025]
+
+-   If normalization happens at all, these results are inconsistent with a model of normalization that operates on a single F1/F2 measure (with or without duration) and more consistent with, e.g. [@fruehwald2025vowel] with sufficiently inclusive formant tracks
 
 \
 \
 
-::::: {layout-ncol="2"}
+::::: {layout="[40,60]"}
 <div>
 
 # References
@@ -850,9 +872,10 @@ plot(refs)
 
 <div>
 
-# Thanks
+# Acknowledgements
 
-We are grateful to Josef Fruehwald, Jennifer Cramer, Kyler Laycock, Kendal Smith, XXXSella's Partner, and Shane O'Nan for their invaluable assistance with this project.
+We are grateful to Josef Fruehwald, Jennifer Cramer, Kendal Smith, Austin Coleman, Kyler Laycock, and Shane O'Nan for their invaluable assistance with this project.
 
 </div>
 :::::
+
