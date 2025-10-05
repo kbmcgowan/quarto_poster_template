@@ -466,21 +466,6 @@ knitr::include_graphics('./images/Standard_lettering.png')
 ::::: {layout-ncol="2"}
 <div>
 
-# Stimuli
-
-```{r, echo=FALSE}
-#| message: false
-#| warning: false
-library(qrcode)
-refs <- qr_code("https://phonetics.as.uky.edu/research/asc/midphon30/#stimuli")
-plot(refs)
-
-```
-
-</div>
-
-<div>
-
 # References
 
 ```{r, echo=FALSE}
@@ -489,8 +474,15 @@ plot(refs)
 library(qrcode)
 refs <- qr_code("https://phonetics.as.uky.edu/research/asc/midphon30/#references")
 plot(refs)
-
 ```
+
+</div>
+
+<div>
+
+# Thanks
+
+We are grateful to Josef Fruehwald, Jennifer Cramer, Kyler Laycock, Kendal Smith, XXXSella's Partner, and Shane O'Nan for their invaluable assistance with this project.
 
 </div>
 :::::
