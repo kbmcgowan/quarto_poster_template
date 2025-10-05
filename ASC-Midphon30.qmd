@@ -31,6 +31,264 @@ csl: apa.csl
 suppress-bibliography: true
 ---
 
+```{r}
+#| label: load-data
+#| message: false
+#| warning: false
+#| include: false
+library(tidyverse)
+library(ggthemes)
+library(brms)
+library(ggdist)
+library(bayestestR)
+library(marginaleffects)
+library(ggpubr)
+library(tidynorm)
+library(geomtextpath)
+library(tidybayes)
+library(broom.mixed)
+
+theme_set(theme_ggdist())
+theme_set(theme_tufte())
+
+afc_df <- read_csv("df.csv")
+prod_param <- read_csv("prod_param.csv")
+
+```
+
+```{r}
+#| label: prepare-data
+#| message: false
+#| warning: false
+#| include: false
+
+asc_afc <- afc_df |>
+  select(
+    sound_file,
+    participant,
+    trial_type, 
+    talker,
+    right,
+    left,
+    middle,
+    vowel,
+    region,
+    condition, 
+    response_exp_2.keys,
+    response_exp.rt,
+    tense_lax,
+    minimal_pair,
+    response_exp.keys,
+    response_exp_2.rt,
+    target_side
+  ) |>
+  filter(
+    trial_type %in% c("who", "what")
+  ) |>
+  dplyr::rename(
+    who_key = response_exp_2.keys,
+    what_key = response_exp.keys,
+    who_rt = response_exp_2.rt,
+    what_rt = response_exp.rt,
+    manipulation = condition
+  ) |>
+  mutate(
+    response = case_when(
+      target_side == "left" & who_key == "m" | target_side == "left" & what_key == "m" ~ "0",
+      target_side == "left" & who_key == "z" | target_side == "left" & what_key == "z" ~ "1",
+      target_side == "right" & who_key == "m" | target_side == "right" & what_key == "m" ~ "1",
+      target_side == "right" & who_key == "z" | target_side == "right" & what_key == "z" ~ "0"
+    )
+  ) |>
+  mutate(
+    region = fct_relevel(
+      region, "NS"
+    )
+  ) |>
+  mutate(
+    manipulation = fct_relevel(
+      manipulation, "full"
+    )
+  ) |>
+  filter(
+   what_rt <= 5.0 | who_rt <= 5.0,
+   talker != "SO"
+  )
+
+asc_afc$region <- asc_afc$region |>
+  recode(
+    "NS" = "Non-Southern",
+    "S" = "Southern"
+  )
+
+asc_afc$manipulation <- asc_afc$manipulation |>
+  recode(
+    "sc" = "Silent center",
+    "full" = "Full vowel quality"
+  )
+
+asc_afc$response <- as.numeric(asc_afc$response)
+
+# subsetting
+
+who_afc <- asc_afc |>
+  filter(
+    trial_type == "who"
+  ) |>
+  mutate(
+    vowel = case_when(
+      middle == "bought" ~ "ɔ",
+      middle == "pot" ~ "a",
+      middle == "beat" ~ "i",
+      middle == "bit" ~ "ɪ",
+      middle == "bat" ~ "æ",
+      middle == "bite" ~ "aɪ",
+      middle == "bet" ~ "ɛ",
+      middle == "boot" ~ "u",
+      middle == "but" ~ "ʌ",
+      middle == "boat" ~ "o",
+      middle == "put" ~ "ʊ",
+      middle == "bait" ~ "e"
+    )
+  ) |>
+  select(
+    -c(what_rt, minimal_pair, what_key)
+  ) |>
+  filter(
+    talker != "SO"
+  )
+
+who_afc$who_rt <- who_afc$who_rt |>
+  as.numeric()
+
+what_afc <- asc_afc |>
+  filter(
+    trial_type == "what"
+  ) |>
+  mutate(
+    vowel = case_when(
+      target_side == "left" & left == "bought" ~ "ɔ",
+      target_side == "left" & left == "pot" | target_side == "right" & right == "pot" ~ "a",
+      target_side == "left" & left == "beat" | target_side == "right" & right == "beat" ~ "i",
+      target_side == "left" & left == "bit" | target_side == "right" & right == "bit" ~ "ɪ",
+      target_side == "left" & left == "bat" | target_side == "right" & right == "bat" ~ "æ",
+      target_side == "left" & left == "bite" | target_side == "right" & right == "bite" ~ "aɪ",
+      target_side == "left" & left == "bet" | target_side == "right" & right == "bet" ~ "ɛ",
+      target_side == "left" & left == "boot" | target_side == "right" & right == "boot" ~ "u",
+      target_side == "left" & left == "but" | target_side == "right" & right == "but" ~ "ʌ",
+      target_side == "left" & left == "boat" | target_side == "right" & right == "boat" ~ "o",
+      target_side == "left" & left == "put" | target_side == "right" & right == "put" ~ "ʊ",
+      target_side == "left" & left == "bait" | target_side == "right" & right == "bait" ~ "e",
+    )
+  ) |>
+  select(
+    -c(who_rt, who_key)
+  ) |>
+  mutate(
+    region = fct_relevel(
+      region, "Non-Southern"
+    )
+  ) |>
+  mutate(
+    manipulation = fct_relevel(
+      manipulation, "Full vowel quality"
+    )
+  ) |>
+  filter(
+    talker != "SO"
+  ) |>
+  mutate(
+    target_word = case_when(
+      target_side == "left" ~ .data$left,
+      target_side == "right" ~ .data$right
+    )
+  )
+
+who_afc$response <- as.numeric(who_afc$response)
+what_afc$response <- as.numeric(what_afc$response)
+
+param_df <- prod_param |>
+  select(
+    param,
+    F1:F3,
+    file_name,
+    id,
+    label
+    #prop_time
+  ) |> 
+  mutate(
+    talker = case_when(
+      str_detect(
+        file_name, "AC"
+        ) ~ "AC",
+      str_detect(
+        file_name, "KL"
+        ) ~ "KL",
+      str_detect(
+        file_name, "SO"
+      ) ~ "SO", 
+      str_detect(
+        file_name, "W3"
+        ) ~ "W3",
+      str_detect(
+        file_name, "W6"
+        ) ~ "W6",
+      str_detect(
+        file_name, "W9"
+      ) ~ "W9"
+    )
+  ) |>
+    filter(
+      talker != "SO"
+    ) |>
+  mutate( # change from new-FAVE transcription to IPA 
+   label = case_when(
+     str_detect(
+       file_name, "bait"
+     ) ~ "eɪ",
+     str_detect(
+       file_name, "bet"
+     ) ~ "ɛ",
+     str_detect(
+       file_name, "beat"
+     ) ~ "i",
+     str_detect(
+       file_name, "bit"
+     ) ~ "ɪ",
+     str_detect(
+       file_name, "bat"
+     ) ~ "æ",
+     str_detect(
+       file_name, "bought"
+     ) ~ "ɔ",
+     str_detect(
+       file_name, "boat"
+     ) ~ "o",
+     str_detect(
+       file_name, "but"
+     ) ~ "ʌ",
+     str_detect(
+       file_name, "boot"
+     ) ~ "u",
+     str_detect(
+       file_name, "put"
+     ) ~ "ʊ",
+     str_detect(
+       file_name, "pot"
+     ) ~ "a",
+    str_detect(
+       file_name, "bite"
+     ) ~ "aɪ"
+   )
+ ) |>
+  mutate(
+    region = case_when(
+      talker == "AC" | talker == "KL" ~ "southern",
+      .default = "nonsouthern"
+    )
+  )
+```
+
 # Background
 
 Silent centers (SC): listeners can identify vowel quality in a CVC syllable even with 65% of tense vowels and 50% of lax vowels removed [@strange2013]. However, listeners may still require vowel centers to hear social information. Three complementary ideas in the literature suggest that social information in vowel centers may be *essential*:
@@ -58,12 +316,13 @@ Silent centers (SC): listeners can identify vowel quality in a CVC syllable even
 
 -   **Participants**: 60 US participants recruited via Prolific
 
--   **Analysis**: BRMS (Bürkner, 2017) logistic regression in R, NHST with bayestestR (Makowski et al., 2019)
+-   **Analysis**: BRMS logistic regression in R [@bürkner2017], NHST with bayestestR [@makowski2019]
 
-- While it is clear that listeners do not need vowel centers to perceive vowel quality accurately, it is not yet known whether listeners can perceive, for example, regional accent without the vowel center.
+-   Many studies have found that listeners perform poorly when asked to label regional accents [@milroy1977; @clopper2004; @campbell2025place]. Our simplified maps are intended to represent Clopper & Pisoni's "dialect clusters"
 
-- However, many studies have found that listeners perform poorly when asked to label regional accents [@milroy1977; @clopper2004; @campbell2025place]. Our simplified maps are intended to represent Clopper & Pisoni's "dialect clusters".\
+-   While it is clear that listeners do not need vowel centers to perceive vowel quality accurately, it is not yet known whether listeners can perceive, for example, regional accent without the vowel center.
 
+\
 \
 
 ::::: {layout-ncol="2"}
@@ -71,15 +330,112 @@ Silent centers (SC): listeners can identify vowel quality in a CVC syllable even
 
 # Predictions
 
-![Predictions under two assumptions about social information](./images/ASC-SDT.png){#fig-predictions width="80%"}
+![Predictions under two assumptions about social information](./images/ASC-SDT.png){#fig-predictions width="95%"}
 
 </div>
 
 <div>
 
-# Silent Centers Stimuli
+# Silent Centers Visualized
 
-![Vowel stimuli with excised portions indicated](./images/vowel_worms.png){#fig-worms width="100%"}
+```{r}
+#| label: fig-worms
+#| echo: FALSE
+#| out.width: 100%
+#| fig.cap: "Vowel stimuli DCTS with excised portions indicated"
+#| fig.align: "center"
+
+param_idct_unnorm <- param_df |>
+  mutate( 
+    label = fct_relevel(
+      label,
+      c("i", "ɪ", "eɪ", "ɛ", "æ", "u", "ʊ", "o", "ʌ", "a", "ɔ")
+    )
+  ) |>
+  summarise(
+    .by = c(label, param, region),
+    across(
+      F1:F2,
+      mean
+    )
+  ) |>
+  reframe_with_idct( 
+    F1:F2, 
+    .by = c(label, region), 
+    .token_id_col = label, 
+    .param_col = param,
+    .n = 100
+    )
+  
+traj_idct_unnorm <- param_idct_unnorm |>   
+  mutate(
+    selection = case_when(
+      label == "æ" | label == "ɛ" | label == "ɪ" | label == "ʌ" | label == "a" | label == "ʊ" & .time < 25 & .time > 75 ~ "edges",
+      label == "æ" | label == "ɛ" | label == "ɪ" | label == "ʌ" | label == "a" | label == "ʊ" & .time > 25 & .time < 75 ~ "center",
+      label == "eɪ" | label == "i" | label == "o" | label == "u" | label == "ɔ" & .time < 18 & .time > 73 ~ "edges",
+      label == "eɪ" | label == "i" | label == "o" | label == "u" | label == "ɔ" & .time > 18 & .time < 73 ~ "center",
+    )
+  ) |>
+  mutate(
+    label = fct_relevel(
+      label,
+      c("i", "ɪ", "eɪ", "ɛ", "æ", "u", "ʊ", "o", "ʌ", "a", "ɔ")
+    )
+  ) |>
+  mutate(
+    type = case_when(
+      label == "æ" | label == "ɛ" | label == "ɪ" | label == "ʌ" | label == "a" | label == "ʊ" ~ "lax",
+      .default = "tense"
+    )
+  ) |>
+  mutate(
+    portion = case_when(
+      type == "tense" & between(.time, 18, 83) ~ "center",
+      type == "tense" & .time <= 18 | .time >= 83 ~ "edges",
+      type == "lax" & between(.time, 25, 75) ~ "center",
+      type == "lax" & .time <= 25 | .time >= 75 ~ "edges"
+    )
+  ) |>
+  pivot_longer(
+    cols = c(F1:F2),
+    names_to = "formant",
+    values_to = "hz"
+  )
+
+traj_idct_unnorm$region <- traj_idct_unnorm$region |>
+  recode(
+    "southern" = "Southern",
+    "nonsouthern" = "Non-Southern"
+  )
+  
+traj_idct_unnorm |>
+  ggplot(
+    aes(
+      y = hz,
+      x = .time, 
+      group = formant,
+      color = portion
+    )
+  ) +
+  geom_path() + 
+  facet_grid(region~label) +
+  scale_x_continuous(
+    breaks = c(1, 100)
+  ) + 
+  scale_color_manual(
+    values = c("thistle3", "black")
+  ) +
+  labs(
+    x = "Time (proportional)",
+    y = "Frequency",
+    color = "Vowel"
+  ) +
+   theme(
+    text = element_text(family = "Helvetica Neue"),
+    axis.text = element_text(size = 6)
+  )
+
+```
 
 </div>
 :::::
@@ -97,11 +453,14 @@ knitr::include_graphics('./images/Standard_lettering.png')
 ```
 
 \
-We can use backslashes to create line breaks in the markdown text. This is a very useful feature for making the text more readable.\
+\
 \
 
 # Discussion
 
+{{< lipsum 3 >}}
+
+\
 \
 
 ::::: {layout-ncol="2"}
