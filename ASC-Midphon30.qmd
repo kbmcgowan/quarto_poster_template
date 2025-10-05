@@ -33,47 +33,56 @@ suppress-bibliography: true
 
 # Background
 
-```{r}
-#| echo: FALSE
-#| out.width: 100%
-#| label: fig-strange
-#| fig.cap: "Schematic representation of silent centers stimuli [@jenkins1983identification]"
-#| fig.align: "center"
-knitr::include_graphics('./images/StrangeJenkins2013.png')
-```
--   Listeners can identify vowel quality in a BVC syllable even with a substantial portion of the vowel removed (see @fig-strange) [@strange2013]
--   Even works for hybrid syllables 
--   But sociolinguisitcs, sound change, intrinsic and extrinsic normalization, 
+Silent centers (SC): listeners can identify vowel quality in a CVC syllable even with 65% of tense vowels and 50% of lax vowels removed [@strange2013]. However, listeners may still require vowel centers to hear social information. Three complementary ideas in the literature suggest that social information in vowel centers may be *essential*:
 
+\
+1. **Primacy of F1/F2 at the vowel midpoint**, sometimes taken along with duration, e.g., sociophonetics, sound change, second language acquisition, etc. [@labov1972; @nycz2013best; @10.1121/10.0000494; @thomas2014]
 
-# Methods
+1.  **Hybrid silent centers** [@rakerd1987evidence; @verbrugge1986evidence]: pairing SC syllable edges from different talkers does not undermine vowel perception so argue vowel edges do not carry social information
 
-1.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-2.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-3.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
+2.  **Vowel normalization** [@johnson2005; @johnson2021speaker] assumes that variation is problematic for listeners so models typically operate on vowel centers where contextual variation is least [@barreda2025reintroducing] XXX cite Joe here too
+
+# Methodology
+
+-   **Talkers**: Three non-Southern talkers from the Wildcat corpus [@Wildcat2010] and two Southern talkers recorded in Kentucky
+
+-   **Stimuli**: BVT syllables with \[i, ɪ, e, ɛ, æ, u, ʊ, o, ʌ, ɔ, a\]; **middle 50% for lax vowels** & **middle 65% for tense vowels** [@10.1121/1.389855] excised with a custom Praat script (see @fig-worms)
+
+-   **Procedure**: 2AFC; listeners heard a CVC word and answered either "what did you hear?" with a pair of words or "who did you hear?" and the maps in @fig-maps. "What?" trials displayed a map congruent with the talker; "Who?" task trials displayed the word that was being spoken.
 
 \
 
-Now we will lay out a manual markdown table with a title.
+!["Non-Southern" and "Southern" stimuli](./images/maps.png){#fig-maps width="80%"}
 
+\
+
+-   **Participants**: 60 US participants recruited via Prolific
+
+-   **Analysis**: BRMS (Bürkner, 2017) logistic regression in R, NHST with bayestestR (Makowski et al., 2019)
+
+- While it is clear that listeners do not need vowel centers to perceive vowel quality accurately, it is not yet known whether listeners can perceive, for example, regional accent without the vowel center.
+
+- However, many studies have found that listeners perform poorly when asked to label regional accents [@milroy1977; @clopper2004; @campbell2025place]. Our simplified maps are intended to represent Clopper & Pisoni's "dialect clusters".\
+
+\
+
+::::: {layout-ncol="2"}
+<div>
 
 # Predictions
 
-For larger, more complicated tables, you may want to use the {gt} package.
+![Predictions under two assumptions about social information](./images/ASC-SDT.png){#fig-predictions width="80%"}
 
-| Default            |        Right |  Center  |
-|--------------------|-------------:|:--------:|
-| Lorem ipsum dolor. | Lorem ipsum. | $\alpha$ |
-| Lorem ipsum.       | Lorem ipsum. | $\beta$  |
-| Lorem.             |       Lorem. | $\gamma$ |
-| Lorem ipsum dolor. |       Lorem. | $\theta$ |
+</div>
 
-: This is a Table Title {#tbl-1}
+<div>
 
-\
-\
-\
-\
+# Silent Centers Stimuli
+
+![Vowel stimuli with excised portions indicated](./images/vowel_worms.png){#fig-worms width="100%"}
+
+</div>
+:::::
 
 # Results
 
@@ -91,78 +100,7 @@ knitr::include_graphics('./images/Standard_lettering.png')
 We can use backslashes to create line breaks in the markdown text. This is a very useful feature for making the text more readable.\
 \
 
-
 # Discussion
-
-We will start with a random **math** equation, just to show that quarto and typst can do *math*. Now some random text so that the yellow box spans two columns. Ut enim aeque doleamus animo, cum corpore dolemus, fieri tamen permagna accessio potest, si aliquod aeternum et infinitum impendere malum nobis opinemur.We will put this next part in a **maize-colored box** to make it stand out.
-
-\
-
-::: {.block fill="rgb(\"FFCB05\")" inset="10pt" radius="4pt" stroke="2pt + black"}
-$$
-\sum_(k=1)^n k = \frac{(n(n+1))}{2} = \frac{(n^2 + n)}{2}
-$$
-
--   That was a math equation bracketed by \$ (which invokes the math translator), notice that the box extends across column breaks. Watch the indent when this extends across a whole line. Note that this box does not have a lot of inset padding, unlike the gray box below, where the text can 'breathe'.
--   Also notice how rounded the corners are (radius) in the two different boxes.
--   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-:::
-
-\
-
-## Implications in a Gray Box (0\[black\]-255\[white\]) with a Blue Border
-
-\
-
-::: {.block fill="luma(210)" inset="25pt" radius="15pt" stroke="5pt + blue"}
-1.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-2.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-3.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-4.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-5.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
-:::
-
-\
-
-Now inserting another plot and controlling the height and width in inches on this 72 in poster. Note the backslash (for a line break) is used on a line by itself to give us a bit of separation between the text and the plot.\
-
-```{r}
-#| echo: FALSE
-#| warning: FALSE
-#| fig.cap: "Peterson & Barney (1952)"
-#| fig.align: "center"
-#| fig.width: 18
-#| fig.height: 10
-  
-library(ggthemes)
-library(phonTools)
-library(tidyverse)
-
-
-data(pb52)
-
-bar <- pb52 %>%
-  mutate(vowel = recode(vowel,
-                           "{" = "æ",
-                           "3'" = "ɝ",
-                           "A" = "a",
-                           "E" = "ɛ",
-                           "i" = "i",
-                           "I" = "ɪ",
-                           "O" = "ɔ",
-                           "u" = "u",
-                           "U" = "ʊ",
-                           "V" = "ʌ"))
-foo <- ggplot(bar, aes(x=f2, y=f1, color=vowel, label=vowel)) + geom_text(alpha = 9/10, family = 'DoulosSIL', size=8) + scale_x_reverse(lim=c(4000,250), position="top") + scale_y_reverse(lim=c(1500,100))
-
-foo + 
-  theme_tufte(base_size = 32) + # set the background theme                                              
-  theme(panel.grid.major = element_blank(), # remove the major lines
-        panel.grid.minor = element_blank()) + # remove the minor lines
-        theme(legend.position = "none") +
-  stat_ellipse(aes(colour = vowel)) +
-  labs(x = "F2 (Hz)", y = "F1 (Hz)", colour = "Vowel")
-```
 
 \
 
@@ -197,4 +135,3 @@ plot(refs)
 
 </div>
 :::::
-

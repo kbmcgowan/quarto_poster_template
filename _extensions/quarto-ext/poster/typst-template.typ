@@ -220,16 +220,6 @@
 
   block( below: 0pt )
 
-  // Start three column mode and configure paragraph properties.
-  //show: columns.with(num_columns, gutter: 64pt)
-  //show: grid.with(
-  //  columns: (1fr, 2fr, 1fr),
-  //  inset: 5pt,
-  //  rows: (auto),
-  //  stroke: (paint: blue, thickness: 1pt, dash: "dashed"), // just to visualize the columns
-  //  gutter: 55pt
-  //)
-
   set par(justify: true, first-line-indent: 0em)
   set text(hyphenate: true)
   show par: set par(spacing: 0.65em)
