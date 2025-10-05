@@ -850,7 +850,7 @@ ggarrange(
 
 -   Tense/Lax: it may be that listeners need a greater percentage of a more dynamic vowel quality to perceive regional variation or this may be due to varying levels of awareness/stereotypicallity of vowels [@Babel2025]
 
--   Sound chance: these results are inconsistent with simplified vowel representations and support a coarticulatory path to sound change [@beddor2009]
+-   Sound change: these results are inconsistent with the use of simplified vowel representations and support a coarticulatory path to sound change [@beddor2009]
 
 -   If normalization happens at all, these results are inconsistent with a model of normalization that operates on a single F1/F2 measure (with or without duration) and more consistent with, e.g. @fruehwald2025vowel with sufficiently inclusive formant tracks
 
