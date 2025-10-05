@@ -548,7 +548,7 @@ what_pred <- what_mod1 |>
     plot.title = element_text(hjust = 0.5),
     plot.caption = element_text(size = 5),
     axis.title.y = element_text(size = 7),
-    axis.title.x = element_text(size = 7)
+    axis.title.x = element_text(size = 5)
   )
 
 who_pred <- who_mod1 |>
@@ -597,7 +597,7 @@ who_pred <- who_mod1 |>
     plot.title = element_text(hjust = 0.5),
     plot.caption = element_text(size = 5),
     axis.title.y = element_text(size = 7),
-    axis.title.x = element_text(size = 7)
+    axis.title.x = element_text(size = 5)
   )
 
 predictions <- ggarrange(
@@ -850,7 +850,9 @@ ggarrange(
 
 -   Tense/Lax: it may be that listeners need a greater percentage of a more dynamic vowel quality to perceive regional variation or this may be due to varying levels of awareness/stereotypicallity of vowels [@Babel2025]
 
--   If normalization happens at all, these results are inconsistent with a model of normalization that operates on a single F1/F2 measure (with or without duration) and more consistent with, e.g. [@fruehwald2025vowel] with sufficiently inclusive formant tracks
+-   Sound chance: these results are inconsistent with simplified vowel representations and support a coarticulatory path to sound change [@beddor2009]
+
+-   If normalization happens at all, these results are inconsistent with a model of normalization that operates on a single F1/F2 measure (with or without duration) and more consistent with, e.g. @fruehwald2025vowel with sufficiently inclusive formant tracks
 
 \
 \
